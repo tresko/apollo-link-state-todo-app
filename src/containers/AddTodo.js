@@ -3,8 +3,8 @@ import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
 const ADD_TODO = gql`
-  mutation addTodo($text: String!) {
-      addTodoes(text: $text, completed: false) @client {
+  mutation AddTodo($title: String!) {
+    addTodo(title: $title) @client {
       id
     }
   }
@@ -22,7 +22,15 @@ const AddTodo = () => (
               if (!input.value.trim()) {
                 return;
               }
-              addTodo({ variables: { text: input.value } });
+              addTodo({
+                variables: { title: input.value },
+                /*optimisticResponse: {
+                  __typename: "Mutation",
+                  addTodo: {
+                    title: input.value,
+                  },
+                },*/
+              });
               input.value = "";
             }}
           >

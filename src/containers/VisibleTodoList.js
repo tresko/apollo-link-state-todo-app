@@ -19,18 +19,20 @@ const getVisibleTodos = (todos, filter) => {
 
 const TODOS_QUERY = gql`
   query GetAllTodos {
-      allTodoes @client {
+      todos @client {
           id
           completed
-          text
+          title
       }
       visibilityFilter @client
   }
 `;
 
 const TOGGLE_TODO_MUTATION = gql`
-  mutation ToggleTodo($id: Int!) {
-      toggleTodo(id: $id) @client
+  mutation ToggleTodo($id: String!) {
+      toggleTodo(id: $id) @client {
+        id
+      }
   } 
 `;
 
@@ -44,7 +46,7 @@ const VisibleTodoList = () => (
         <Mutation mutation={TOGGLE_TODO_MUTATION}>
           {(toggleTodo) => (
             <TodoList
-              todos={getVisibleTodos(data.allTodoes, data.visibilityFilter)}
+              todos={getVisibleTodos(data.todos, data.visibilityFilter)}
               toggleTodo={toggleTodo}
             />
           )}

@@ -19,19 +19,19 @@ const typeDefs = `
   
   type Todo {
     id: ID!
-    text: String!
+    title: String!
     completed: Boolean!
   }
 
   type Mutation {
-    addTodoes(text: String!): Todo
-    toggleTodo(id: Int!): Todo
+    addTodo(title: String!): Todo
+    toggleTodo(id: String!): Todo
     updateVisibilityFilter(filter: VisibilityFilterEnum!): VisibilityFilterEnum
   }
 
   type Query {
     visibilityFilter: VisibilityFilterEnum
-    allTodoes: [Todo]
+    todos: [Todo]
   }
 `;
 

@@ -5,9 +5,9 @@ import Todo from "./Todo";
 const propTypes = {
   todos: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired,
-      text: PropTypes.string.isRequired
+      title: PropTypes.string.isRequired
     }).isRequired
   ).isRequired,
   toggleTodo: PropTypes.func.isRequired
@@ -16,7 +16,18 @@ const propTypes = {
 const TodoList = ({ todos, toggleTodo }) => (
   <ul>
     {todos.map(todo => (
-      <Todo key={todo.id} {...todo} onClick={() => toggleTodo({ variables: { id: todo.id } })} />
+      <Todo
+        key={todo.id}
+        {...todo}
+        onClick={() => toggleTodo({
+          variables: { id: todo.id },
+          /*optimisticResponse: {
+            __typename: "Mutation",
+            toggleTodo: {
+              id: todo.id,
+            },
+          },*/
+        })} />
     ))}
   </ul>
 );
